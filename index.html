@@ -142,28 +142,34 @@
     </div>
     
     <div class="image-gallery">
-        <img src="hochzeit-beerpong.jpg" alt="Hochzeit Beer Pong">
+        <img src="A_wild_wedding_party_scene_where_guests_are_playin.png" alt="Hochzeit Beer Pong">
         <img src="hand-halten.jpg" alt="Paar hält Hände">
     </div>
     
     <script>
-        let teams = [];
-        
+        let teams = JSON.parse(localStorage.getItem('teams')) || [];
+
+        function saveTeams() {
+            localStorage.setItem('teams', JSON.stringify(teams));
+        }
+
         function addTeam() {
             let teamInput = document.getElementById('teamName');
             let teamName = teamInput.value.trim();
             if (teamName && !teams.includes(teamName)) {
                 teams.push(teamName);
                 teamInput.value = "";
+                saveTeams();
                 updateTeamList();
             }
         }
-        
+
         function deleteTeam(index) {
             teams.splice(index, 1);
+            saveTeams();
             updateTeamList();
         }
-        
+
         function updateTeamList() {
             let teamContainer = document.getElementById('teams');
             teamContainer.innerHTML = "";
@@ -174,6 +180,9 @@
                 teamContainer.appendChild(div);
             });
         }
+
+        // Initiales Laden
+        updateTeamList();
     </script>
 </body>
 </html>
